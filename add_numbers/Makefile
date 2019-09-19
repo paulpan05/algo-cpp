@@ -2,6 +2,7 @@ IDIR=../
 CC=g++
 CCVERSION=c++11
 CFLAGS=-I$(IDIR)
+.DEFAULT_GOAL := test
 
 add_numbers.o: add_numbers.cc add_numbers.hh
 	$(CC) -std=$(CCVERSION) -c -o $@ $<
