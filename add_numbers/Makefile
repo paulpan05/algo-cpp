@@ -4,15 +4,20 @@ CCVERSION=c++11
 CFLAGS=-I$(IDIR)
 .DEFAULT_GOAL := test
 
-add_numbers.o: add_numbers.cc add_numbers.hh
+files=add_numbers
+objs=$(patsubst %, %.o, $(files))
+sources=$(patsubst %, %.cc, $(files))
+heads=$(patsubst %, %.hh, $(files))
+
+$(objs): $(sources) $(heads)
 	$(CC) -std=$(CCVERSION) -c -o $@ $<
 
 test.o: test.cc
 	$(CC) -std=$(CCVERSION) -c -o $@ $< $(CFLAGS)
 
-test: test.o add_numbers.o
+test: test.o $(objs)
 	$(CC) -std=$(CCVERSION) -o $@ $^ $(CFLAGS)
 
 .PHONY: clean
 clean:
-	rm -f add_numbers.o test.o test
+	rm -f *.o test
